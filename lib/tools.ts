@@ -7,75 +7,39 @@ const firecrawl = new Firecrawl({ apiKey: process.env.FIRECRAWL_API_KEY });
 
 export const sandpack = tool({
     description: `
-    You have access to a sandpack tool that creates interactive code sandboxes. This tool is perfect for demonstrating code examples, creating prototypes, or building interactive tutorials.
+    You have access to a Sandpack-powered tool for creating live, interactive React component previews. 
+    Use this tool to showcase React components.
 
-    Required Parameters:
-    - template (required): Choose from "react", "vue", "angular", "vanilla", "node", "static", "react-ts", "vue-ts", "vanilla-ts", "solid", "svelte", "test-ts", "nextjs", "vite", "vite-react", or "vite-react-ts"
-    - files (required): This is a required parameter that defines the code files in your sandbox. It must be an object where:
-    - Keys are file paths with forward slash (e.g., "/App.js", "/index.html", "/styles.css")
-    - Values are objects with:
-        - code: string containing the file content
-        - active: boolean (optional) - whether this file should be initially selected
+    Remember:
+    - Generate reusable, typed React components (TypeScript).
+    - Style components with TailwindCSS for modern, responsive designs.
+    - Use TailwindCSS for styling.
+    - Write proper props with type validation.
+    - React and TailwindCSS are preinstalled. No need to install them using dependencies. No need to import any css file.
 
-    Example files structure:
-    {
-        "/App.tsx": {
-            "code": "import React from 'react';\\n\\nfunction App() {\\n  return <h1>Hello World!</h1>;\\n}\\n\\nexport default App;",
-            "active": true
-        },
-        "/index.tsx": {
-            "code": "import React from 'react';\\nimport { createRoot } from 'react-dom/client';\\nimport App from './App';\\nimport './styles.css';\\n\\nconst container = document.getElementById('root');\\nconst root = createRoot(container);\\nroot.render(<App />);"
-        }
-    }
+    The tool accepts:
+    - template: A project template (use "react-ts" for React + TypeScript).
+    - files: object with string keys and value { code: string, active?: boolean }
+    - dependencies: object with string keys and string versions.
+    - options: object with the following properties:
+      - readOnly: A boolean value to indicate if the sandbox should be read-only.
+      - showConsole: A boolean value to indicate if the console should be shown.
+      - autorun: A boolean value to indicate if the sandbox should be automatically run.
 
-    Optional Parameters:
-    - dependencies (optional): Object specifying npm packages and their versions:
-    {
-        "lodash": "^4.17.21",
-        "axios": "^1.0.0"
-    }
-    - options (optional): Configuration object:
-    - readOnly: boolean - make the code non-editable
-    - showConsole: boolean - display the console panel
-    - autorun: boolean - automatically execute code on load
+    Always produce fully working, production-ready code that the user can directly preview in the sandbox.
 
-    Usage Examples:
-
-    Basic React TypeScript Example:
+    Example:
+    Create a primary button component with typed props and TailwindCSS styling.
     {
         "template": "react-ts",
         "files": {
-            "/App.tsx": {
-            "code": "import React, { useState } from 'react';\\n\\nfunction App(): JSX.Element {\\n  const [count, setCount] = useState<number>(0);\\n  return (\\n    <div>\\n      <h1>Count: {count}</h1>\\n      <button onClick={() => setCount(count + 1)}>Increment</button>\\n    </div>\\n  );\\n}\\n\\nexport default App;",
-            "active": true
-            }
-        },
-        "options": {
-            "showConsole": true,
-            "autorun": true
+            "App.tsx": {"code": "import React from 'react';\nimport { Button } from './Button';\n\nexport default function App() {\n  return (\n    <div className='flex items-center justify-center h-screen'>\n      <Button label='Click Me' onClick={() => alert('Clicked!')} />\n    </div>\n  );\n}", "active": true},
+            "Button.tsx": {"code": "import React from 'react';\n\ninterface ButtonProps {\n  label: string;\n  onClick?: () => void;\n}\n\nexport const Button: React.FC<ButtonProps> = ({ label, onClick }) => {\n  return (\n    <button\n      onClick={onClick}\n      className='px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition'\n    >\n      {label}\n    </button>\n  );\n};", "active": false},
         }
     }
-
-    Important Notes:
-    - Always include the files parameter - it's required and cannot be omitted
-    - At least one file should be provided in the files object
-    - For React-ts templates, typically include App.ts and optionally index.ts
-    - Use proper escape characters for newlines (\\n) in your code strings
-    - Set active: true for the file you want users to see first
-    - Create proper full screen examples.
-    - Use TailwindCSS for styling. You would need to import the script.
-
-    When to Use Sandpack:
-    Use the sandpack tool when you need to:
-    - Demonstrate interactive code examples
-    - Create live coding tutorials
-    - Show working prototypes
-    - Let users experiment with code modifications
-    - Display complex examples that benefit from a live preview
-
-    Remember: The files parameter is mandatory and must contain at least one file with valid code content.`,
+    `,
     inputSchema: z.object({
-      template: z.enum(['react', 'vue', 'angular', 'vanilla', 'node', 'static', 'react-ts', 'vue-ts', 'vanilla-ts', 'solid', 'svelte', 'test-ts', 'nextjs', 'vite', 'vite-react', 'vite-react-ts']),
+      template: z.literal('react-ts'),
   
       // Files: object with string keys and value { code: string, active?: boolean }
       files: z.record(z.string(), z.object({

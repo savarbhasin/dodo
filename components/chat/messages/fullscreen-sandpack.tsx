@@ -26,7 +26,10 @@ const FullscreenSandpack = ({ sandpackData, onClose }: FullscreenSandpackProps) 
       template={sandpackData?.template || 'react'}
       files={sandpackData?.files || {}}
       customSetup={{ dependencies: sandpackData?.dependencies || {} }}
-      options={sandpackData?.options || {}}
+      options={{
+        externalResources: ["https://cdn.tailwindcss.com"],
+        ...sandpackData?.options || {}
+      }}
       style={{ height: '100vh', width: '100vw' }}
     >
       <SandpackLayout className="h-full w-full">

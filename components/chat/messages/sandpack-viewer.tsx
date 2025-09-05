@@ -24,16 +24,21 @@ const SandpackViewer = ({ part, setFullscreenSandpack }: SandpackViewerProps) =>
     <SandpackProvider 
       theme={atomDark}
       template={part.input?.template || 'react'} 
-      files={part.input?.files || {}} 
+      files={{
+        ...part.input?.files || {},
+      }}
       customSetup={{ dependencies: part.input?.dependencies || {} }}
-      options={part.input?.options || {}}
+      options={{
+        externalResources: ["https://cdn.tailwindcss.com"],
+        ...part.input?.options || {}
+      }}
       className="h-full"
     >
       <SandpackLayout>
         {!part.output ? (
-          <SandpackCodeEditor showTabs showLineNumbers showInlineErrors wrapContent className="h-96" />
+          <SandpackCodeEditor showTabs showLineNumbers showInlineErrors wrapContent/>
         ) : (
-          <SandpackPreview className="h-96" showOpenInCodeSandbox={false} showRefreshButton />
+          <SandpackPreview showOpenInCodeSandbox={true} showRefreshButton={true} />
         )}
       </SandpackLayout>
     </SandpackProvider>
