@@ -1,8 +1,7 @@
-import { scrapeWebpage } from '@/lib/scrape';
+import { tools } from '@/lib/tools';
 import { google } from '@ai-sdk/google';
 import { openai } from '@ai-sdk/openai';
-import { streamText, UIMessage, convertToModelMessages, tool, stepCountIs } from 'ai';
-import { z } from 'zod';
+import { streamText, UIMessage, convertToModelMessages, stepCountIs } from 'ai';
 
 
 export async function POST(req: Request) {
@@ -12,17 +11,7 @@ export async function POST(req: Request) {
     model: model.split('/')[0] === 'openai' ? openai(model.split('/')[1]) : google(model.split('/')[1]),
     messages: convertToModelMessages(messages),
     stopWhen: stepCountIs(5),
-    tools: {
-        scrape: tool({
-            description: 'Scrape a webpage given the url',
-            inputSchema: z.object({
-                url: z.string(),
-            }),
-            execute: async ({ url }) => {
-                return await scrapeWebpage(url);
-            }
-        })
-    },
+    tools: tools,
     providerOptions: {
       google: {
         thinkingConfig: {
@@ -30,8 +19,8 @@ export async function POST(req: Request) {
           includeThoughts: true,
         },
       },
-     openai: {
-        reasoningEffort: 'low',
+      openai: {
+          reasoningEffort: 'low',
       },
     }
   });

@@ -1,4 +1,8 @@
 export const models = [
+  {
+    name: 'GPT 4o Mini',
+    value: 'openai/gpt-4o-mini',
+  },
     {
       name: 'GPT 4o',
       value: 'openai/gpt-4o',
@@ -7,10 +11,7 @@ export const models = [
         name: 'o4-mini',
         value: 'openai/o4-mini',
     },
-    {
-      name: 'GPT 4o Mini',
-      value: 'openai/gpt-4o-mini',
-    },
+    
     {
       name: 'GPT 5 Mini',
       value: 'openai/gpt-5-mini',
