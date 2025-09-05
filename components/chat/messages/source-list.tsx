@@ -1,19 +1,22 @@
 import { Sources, SourcesTrigger, SourcesContent, Source } from '@/components/ai-elements/sources';
-import type { UIMessage } from 'ai';
 
-interface SourceListProps {
-  message: UIMessage;
+export interface SourceListPart {
+  type: string;
+  input?: {
+    urls: string[];
+  }
 }
 
-const SourceList = ({ message }: SourceListProps) => {
-  const sources = (message.parts as any[]).filter((p: any) => p.type === 'source-url');
-
+const SourceList = ({ part }: {
+  part: SourceListPart
+}) => {
+  const sources = part.input?.urls;
   return (
     <Sources>
-      <SourcesTrigger count={sources.length} />
-      {sources.map((part: any, i) => (
-        <SourcesContent key={`${message.id}-${i}`}>
-          <Source href={part.url} title={part.url} />
+      <SourcesTrigger count={sources?.length || 0} />
+      {sources?.map((url: string, i: number) => (
+        <SourcesContent key={i}>
+          <Source href={url} title={url} />
         </SourcesContent>
       ))}
     </Sources>

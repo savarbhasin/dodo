@@ -4,6 +4,7 @@ import SandpackViewer, { SandpackPart } from './messages/sandpack-viewer';
 import { MessageUI } from '@/components/chat/messages/message-ui';
 import type { UIMessage } from 'ai';
 import type { ChatStatus } from 'ai';
+import { SourceListPart } from './messages/source-list';
 
 interface SandpackData {
   template?: 'react' | 'vue' | 'angular' | 'vanilla' | 'node' | 'static' | 'react-ts' | 'vue-ts' | 'vanilla-ts' | 'solid' | 'svelte' | 'test-ts' | 'nextjs' | 'vite' | 'vite-react' | 'vite-react-ts';
@@ -25,10 +26,6 @@ const MessageRenderer = ({ message, messages, status, regenerate, setFullscreenS
 
   return (
     <>
-      {message.role === 'assistant' && parts.some((p) => p.type === 'source-url') && (
-        <SourceList message={message} />
-      )}
-
       {parts.map((part, i) => {
         switch (part.type) {
           case 'text':
@@ -37,6 +34,8 @@ const MessageRenderer = ({ message, messages, status, regenerate, setFullscreenS
             return <ReasoningBlock key={i} part={part} message={message} status={status} />;
           case 'tool-sandpack':
             return <SandpackViewer key={i} part={part as unknown as SandpackPart} setFullscreenSandpack={setFullscreenSandpack} />;
+          case 'tool-scrape':
+            return <SourceList key={i} part={part as unknown as SourceListPart} />;
           default:
             return null;
         }
