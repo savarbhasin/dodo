@@ -15,4 +15,4 @@ notes:
 - spins up a **nextjs sandpack** where the llm writes files, and you can click *view fullscreen* for a preview  
 - scraping handled via **firecrawl**
 - uses ai sdk
-- demo available here [here](https://youtu.be/DdG6xn9vh8c)
+- demo available [here](https://youtu.be/DdG6xn9vh8c)
