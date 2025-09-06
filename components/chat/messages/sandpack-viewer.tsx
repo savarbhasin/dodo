@@ -1,11 +1,11 @@
-import { SandpackProvider, SandpackLayout, SandpackPreview, SandpackCodeEditor } from '@codesandbox/sandpack-react';
+import { SandpackProvider, SandpackLayout, SandpackCodeEditor } from '@codesandbox/sandpack-react';
 import { atomDark } from '@codesandbox/sandpack-themes';
 
 interface SandpackData {
   template?: 'react' | 'vue' | 'angular' | 'vanilla' | 'node' | 'static' | 'react-ts' | 'vue-ts' | 'vanilla-ts' | 'solid' | 'svelte' | 'test-ts' | 'nextjs' | 'vite' | 'vite-react' | 'vite-react-ts';
   files?: Record<string, string>;
   dependencies?: Record<string, string>;
-  options?: Record<string, any>;
+  options?: Record<string, unknown>;
 }
 
 export interface SandpackPart {
@@ -20,7 +20,6 @@ interface SandpackViewerProps {
 }
 
 const SandpackViewer = ({ part, setFullscreenSandpack }: SandpackViewerProps) => {
-  const template = part.input?.template || 'nextjs';
 
   return (
     <div className="my-4">

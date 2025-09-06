@@ -59,7 +59,7 @@ export const sandpack = tool({
         autorun: z.boolean().optional(),
       }).optional()
     }),
-    execute: async ({ template, files, dependencies, options }) => {
+    execute: async ({ template: _template, files: _files, dependencies: _dependencies, options: _options }) => { // eslint-disable-line @typescript-eslint/no-unused-vars
       return 'Tool call success.'
     }
   })

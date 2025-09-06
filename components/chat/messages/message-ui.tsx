@@ -4,7 +4,6 @@ import { Action, Actions } from "../../ai-elements/actions";
 import { CopyIcon, RefreshCcwIcon, CheckIcon } from "lucide-react";
 import { Response } from "../../ai-elements/response";
 import { TextUIPart, UIMessage } from "ai";
-import { toast } from "sonner";
 
 interface MessageUIProps {
     message: UIMessage;

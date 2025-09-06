@@ -1,6 +1,5 @@
 import {
     PromptInput,
-    PromptInputButton,
     PromptInputModelSelect,
     PromptInputModelSelectContent,
     PromptInputModelSelectItem,
@@ -22,7 +21,7 @@ interface InputBoxProps {
 
 export function InputBox({ sendMessage, status }: InputBoxProps) {
     const [input, setInput] = useState<string>('');
-    const [model, setModel] = useState<string>('google/gemini-2.5-flash');
+    const [model, setModel] = useState<string>('openai/gpt-5-mini');
     
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {

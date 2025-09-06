@@ -10,7 +10,7 @@ interface SandpackData {
   template?: 'react' | 'vue' | 'angular' | 'vanilla' | 'node' | 'static' | 'react-ts' | 'vue-ts' | 'vanilla-ts' | 'solid' | 'svelte' | 'test-ts' | 'nextjs' | 'vite' | 'vite-react' | 'vite-react-ts';
   files?: Record<string, string>;
   dependencies?: Record<string, string>;
-  options?: Record<string, any>;
+  options?: Record<string, any>; // eslint-disable-line @typescript-eslint/no-explicit-any
 }
 
 interface MessageRendererProps {
