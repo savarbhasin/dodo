@@ -16,6 +16,8 @@ export const sandpack = tool({
     - Use TailwindCSS for styling.
     - Write proper props with type validation.
     - React and TailwindCSS are preinstalled. No need to install them using dependencies. No need to import any css file.
+    - No need to create package.json or tsconfig.json.
+
 
     The tool accepts:
     - template: A project template (use "react-ts" for React + TypeScript).

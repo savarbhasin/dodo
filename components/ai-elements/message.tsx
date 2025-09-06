@@ -35,7 +35,12 @@ export const MessageContent = ({
       'flex flex-col gap-2 overflow-hidden rounded-lg px-4 py-3 text-foreground text-sm',
       'group-[.is-user]:bg-primary group-[.is-user]:text-primary-foreground',
       'group-[.is-assistant]:bg-secondary group-[.is-assistant]:text-foreground',
-      'is-user:dark',
+      '[&_a]:!text-blue-600',
+      '[&_a]:underline',
+      '[&_a:hover]:!text-blue-800',
+      'dark:[&_a]:!text-blue-400',
+      'dark:[&_a:hover]:!text-blue-300',
+      '[&_a]:break-all',
       className
     )}
     {...props}
