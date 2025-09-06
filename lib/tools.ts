@@ -7,41 +7,41 @@ const firecrawl = new Firecrawl({ apiKey: process.env.FIRECRAWL_API_KEY });
 
 export const sandpack = tool({
     description: `
-    You have access to a Sandpack-powered tool for creating live, interactive React component previews. 
-    Use this tool to showcase React components.
+    You have access to a Sandpack-powered tool for creating live, interactive Next.js (Page Router) previews.
 
-    Remember:
-    - Generate reusable, typed React components (TypeScript).
-    - Style components with TailwindCSS for modern, responsive designs.
-    - Use TailwindCSS for styling.
-    - Write proper props with type validation.
-    - React and TailwindCSS are preinstalled. No need to install them using dependencies. No need to import any css file.
-    - No need to create package.json or tsconfig.json.
+    Use this tool to showcase Next.js pages and API routes. Prefer the "nextjs" template. Use "react-ts" only for plain React component sandboxes.
 
+    What the Next.js (Page Router) template already includes (do NOT rewrite unless you need changes):
+    - /pages/_app.js
+    - /pages/index.js
+    - /next.config.js (DONT EDIT)
+    - /package.json (DONT EDIT)
+    - /styles.css
+
+    Provide ONLY the files you want to add or change. Predefined files need not be included if unchanged.
+
+    Styling:
+    - Tailwind via CDN is available in preview. You can use Tailwind classes without installing dependencies or importing CSS.
 
     The tool accepts:
-    - template: A project template (use "react-ts" for React + TypeScript).
-    - files: object with string keys and value { code: string, active?: boolean }
-    - dependencies: object with string keys and string versions.
-    - options: object with the following properties:
-      - readOnly: A boolean value to indicate if the sandbox should be read-only.
-      - showConsole: A boolean value to indicate if the console should be shown.
-      - autorun: A boolean value to indicate if the sandbox should be automatically run.
+    - template: "nextjs" (preferred) or "react-ts".
+    - files: object with string keys and value { code: string, active?: boolean } for files you add/override.
+    - dependencies: object with string keys and string versions (rarely needed for the default template).
+    - options: { readOnly?: boolean; showConsole?: boolean; autorun?: boolean }
 
-    Always produce fully working, production-ready code that the user can directly preview in the sandbox.
+    Always produce fully working code that directly runs in the sandbox. For backend demos, add API routes under "/pages/api/*.js".
 
-    Example:
-    Create a primary button component with typed props and TailwindCSS styling.
+    Example: Next.js Page Router page with an API route (only overriding index page and adding an API file).
     {
-        "template": "react-ts",
-        "files": {
-            "App.tsx": {"code": "import React from 'react';\nimport { Button } from './Button';\n\nexport default function App() {\n  return (\n    <div className='flex items-center justify-center h-screen'>\n      <Button label='Click Me' onClick={() => alert('Clicked!')} />\n    </div>\n  );\n}", "active": true},
-            "Button.tsx": {"code": "import React from 'react';\n\ninterface ButtonProps {\n  label: string;\n  onClick?: () => void;\n}\n\nexport const Button: React.FC<ButtonProps> = ({ label, onClick }) => {\n  return (\n    <button\n      onClick={onClick}\n      className='px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition'\n    >\n      {label}\n    </button>\n  );\n};", "active": false},
-        }
+      "template": "nextjs",
+      "files": {
+        "/pages/index.js": { "code": "export default function Home() {\n  const [msg, setMsg] = React.useState('');\n  React.useEffect(() => {\n    fetch('/api/hello').then(r => r.json()).then(d => setMsg(d.message));\n  }, []);\n  return (\n    <div className=\"min-h-screen flex items-center justify-center\">\n      <main className=\"p-6 text-center space-y-4\">\n        <h1 className=\"text-2xl font-semibold\">Next.js + API</h1>\n        <p className=\"text-gray-400\">{msg}</p>\n      </main>\n    </div>\n  );\n}" , "active": true },
+        "/pages/api/hello.js": { "code": "export default function handler(req, res) { res.status(200).json({ message: 'Hello from Next.js API!' }); }" }
+      }
     }
     `,
     inputSchema: z.object({
-      template: z.literal('react-ts'),
+      template: z.enum(['nextjs', 'react-ts']),
   
       // Files: object with string keys and value { code: string, active?: boolean }
       files: z.record(z.string(), z.object({
